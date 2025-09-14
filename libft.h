@@ -10,6 +10,8 @@ typedef unsigned short u16;
 // u8 => unsigned char, unsigned integer (or often char) on 8 bits i.e. 1 byte
 typedef unsigned char u8;
 
+#define STRLEN_MAX 1024 * 1024 // 1 048 576 bytes
+
 /**
  * ft_isalpha - Check if a given character is alpha.
  * @param c (u8): character to test
@@ -47,7 +49,7 @@ u8 ft_isascii(u8 c);
  *
  */
 
-u8 ft_ispru8(u8 c);
+u8 ft_isprint(u8 c);
 
 /*
  * ******************************
