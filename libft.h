@@ -75,22 +75,22 @@ void ft_bzero(void *s, u32 n);
 /**
  *
  */
-void *ft_memcpy(const void *src, const void *dest, u32 size);
+void *ft_memcpy(const void *src, void *dest, u32 size);
 
 /**
  * Overlaps!! if src < dest < src + size, overlap !!!!
  */
-void *ft_memmove(const void *src, const void *dest, u32 size);
+void *ft_memmove(const void *src, void *dest, u32 size);
 
 /**
  *
  */
-u64 ft_strlcpy(const char *src, const char *dest, u64 size);
+u64 ft_strlcpy(const char *src, char *dest, u64 size);
 
 /**
  *
  */
-u64 ft_strlcat(const char *src, const char *dest, u64 size);
+u64 ft_strlcat(const char *src, char *dest, u64 size);
 
 /*
  *
