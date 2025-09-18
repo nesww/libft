@@ -16,6 +16,18 @@ typedef unsigned char u8;
 #define NULL 0
 
 #define STRLEN_MAX 1024 * 1024 // 1 048 576 bytes
+#define MAX_LOOP_BEF_CRASH 1000
+
+// Print a specific message for an unimplemented function.
+#define TODO(str)                                                              \
+  do {                                                                         \
+    if (str)                                                                   \
+      fprintf(stderr, "TODO:" #str "\n");                                      \
+    exit(1);                                                                   \
+  } while (0)
+
+// Make any argument of a function UNUSED, avoiding -Werror=unused-parameter
+#define UNUSED(x) ((void)x)
 
 /**
  * ft_isalpha - Check if a given character is alpha.
@@ -24,8 +36,8 @@ typedef unsigned char u8;
  * True iff the provided character is an alphabetic value (i.e. not a number,
  * but a valid letter in sense of ASCII)
  *
- * Return: true iff the provided character is an alpha value (not a number, nor
- * another ASCII value).
+ * Return: true iff the provided character is an alpha value (not a number,
+ * nor another ASCII value).
  */
 u8 ft_isalpha(u8 c);
 
@@ -254,25 +266,60 @@ const char *ft_strrchr(const char *s, u8 c);
 
 /*
  * ft_strncmp - Compare two strings for n bytes.
+ * @param s1 (const char*): first string to compare
+ * @param s2 (const char*): second string to compare
  *
+ * Compare the two provided string for n bytes of each.
+ * If given n is bigger than one of the string buffer,
+ * will exit with a specific message.
  *
+ * Return: 0 if equals, negative if s1 < s2, positive if s1 > s2
  */
 int ft_strncmp(const char *s1, const char *s2, u32 n);
 
 /*
+ * ft_memchr - Search for a character in the buffer, bounded to n.
+ * @param s (const void*): pointer to buffer where to search
+ * @param c (u8): character to find
+ * @param n (u32): number of bytes to limit search to
  *
+ * Search the first occurence of the given character/byte in
+ * the provided buffer, bounded to n.
+ *
+ * Return: the pointer to the first occurrence if found, else NULL.
  */
-void *ft_memchr(void *s, u32 n);
+const void *ft_memchr(const void *s, u8 c, u32 n);
 
 /*
+ * ft_memcmp - Compare the contents of two buffer over n bytes.
+ * @param s1 (const void*): first buffer
+ * @param s2 (const void*): second buffer
+ * @param n (u64): number of bytes to parse
  *
+ * Compare the contents of the two provided buffers, for
+ * n bytes on each. Buffers sizes must be larger or equal
+ * than n, to avoid segfault.
+ *
+ * Return: 0 if equals, negative if s1 < s2, positive if s1 > s2
  */
 int ft_memcmp(const void *s1, const void *s2, u64 n);
 
 /*
+ * ft_strnstr - Search for the first occurence of string little in big, over
+ * len.
+ * @param big (const char*): big string where to search
+ * @param little (const char*): little string to search
+ * @param len (u64): len limit of search in big string
  *
+ * Search for the first occurrence of the little string in the big
+ * string, going max to len character in big string.
+ * Both strings must be NUL-terminated.
+ *
+ * Return: if little is an empty (but NUL-terminated) string, return big.
+ * If found, return the pointer to the start of the occurrence.
+ * If not found at all, returns NULL.
  */
-char *ft_strnstr(const char *big, const char *little, u64 len);
+const char *ft_strnstr(const char *big, const char *little, u64 len);
 
 /*
  * needs to be NUL-terminated!!! see unix/c convention

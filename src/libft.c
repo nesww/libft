@@ -1,4 +1,4 @@
-#include "libft.h"
+#include <libft.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -137,4 +137,57 @@ int ft_strncmp(const char *s1, const char *s2, u32 n) {
     sum_s2 += s2[i];
   }
   return sum_s1 - sum_s2;
+}
+
+const void *ft_memchr(const void *s, u8 c, u32 n) {
+  u32 counter = 0;
+  const char *temp = (const char *)s;
+  while (counter < n) {
+    if (temp[counter] == c)
+      return &temp[counter];
+  }
+  return NULL;
+}
+
+int ft_memcmp(const void *s1, const void *s2, u64 n) {
+  const char *ts1 = (const char *)s1;
+  const char *ts2 = (const char *)s2;
+
+  u32 sum_s1 = 0;
+  for (u64 i = 0; i < n; ++i)
+    sum_s1 += ts1[i];
+
+  u32 sum_s2 = 0;
+  for (u64 i = 0; i < n; ++i)
+    sum_s2 += ts2[i];
+
+  return sum_s1 - sum_s2;
+}
+
+const char *ft_strnstr(const char *big, const char *little, u64 len) {
+  if (little[0] == '\0')
+    return big;
+  u32 counter = 0;
+  u32 little_len = ft_strlen(little);
+  while (counter < len && counter < MAX_LOOP_BEF_CRASH) {
+    if (big[counter] == little[0]) {
+      u32 tmp = 1;
+      while (counter + tmp < len && tmp < little_len) {
+        if (big[counter + tmp] == little[tmp])
+          ++tmp;
+        else
+          break;
+      }
+      if (tmp == little_len)
+        return &big[counter];
+    }
+    ++counter;
+  }
+  return NULL;
+}
+
+int ft_atoi(const char *nptr) {
+  UNUSED(nptr);
+  TODO("ft_atoi not yet implemented.");
+  return 0;
 }
