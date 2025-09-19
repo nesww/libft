@@ -322,7 +322,41 @@ int ft_memcmp(const void *s1, const void *s2, u64 n);
 const char *ft_strnstr(const char *big, const char *little, u64 len);
 
 /*
- * needs to be NUL-terminated!!! see unix/c convention
+ * ft_atoi - Convert initial portion of a string to int.
+ * @param nptr (const char*): pointer to the string to convert
+ *
+ * Will convert every valid digit value into a integer.
+ * Can handle negative values. Will stop at the first non-digit
+ * character encountered (e.g. "12b3" will give 12, but "a231" ).
+ * The given string must be NUL-terminated.
+ *
+ * Return: the converted value, or 0 on error (non-valid first char).
  */
 int ft_atoi(const char *nptr);
+
+/**
+ * ft_calloc - Allocate memory for an array of n element of size bytes.
+ * @param n (u64): number of elements of the array
+ * @param size (u64): size in bytes of each element
+ *
+ * Allocate memory for an array of n elements, that each
+ * have size bytes. Every byte is set to zero. If integer
+ * overflow could occur (size * n > UINT64_MAX), will return NULL.
+ *
+ * Return: the pointer to the allocated memory, or NULL if fails.
+ */
+void *ft_calloc(u64 n, u64 size);
+
+/**
+ * ft_strdup - Duplicate a string to a new pointer.
+ * @param s (const char*): the string to duplicate
+ *
+ * Duplicate the given string into a new pointer.
+ * Uses malloc(), the new pointer will then need to be freed
+ * to avoid memleak.
+ *
+ * Return: the pointer to the duplicate, NULL if not enough memory (check
+ * errno).
+ */
+char *ft_strdup(const char *s);
 #endif // LIBFT_H

@@ -17,5 +17,9 @@ int main(int argc, char **argv) {
   fprintf(stdout, "Big address : %p, found address for little: %p, diff: %ld\n",
           big, found, found - big);
 
-  ft_atoi(NULL);
+  fprintf(stdout, "Test for int cast for a char: had %c, casted to int: %d \n",
+          '2', (int)'2');
+
+  fprintf(stdout, "Test for atoi: chars: %s, result: %d\n", "-123bc",
+          ft_atoi("-123bc"));
 }

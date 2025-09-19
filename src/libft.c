@@ -1,4 +1,6 @@
+#include <errno.h>
 #include <libft.h>
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -187,7 +189,36 @@ const char *ft_strnstr(const char *big, const char *little, u64 len) {
 }
 
 int ft_atoi(const char *nptr) {
-  UNUSED(nptr);
-  TODO("ft_atoi not yet implemented.");
-  return 0;
+  u32 nptr_len = ft_strlen(nptr);
+  u32 i = 1;
+  int isneg = nptr[0] == '-';
+  int result = 0;
+  while (i < nptr_len && ft_isdigit(nptr[i])) {
+    result += ((int)nptr[i] - 0x30);
+    if (!ft_isdigit(nptr[i + 1]))
+      break;
+    result *= 10;
+    ++i;
+  }
+  return isneg ? result * (-1) : result;
+}
+
+void *ft_calloc(u64 n, u64 size) {
+  if (n != 0 && size > UINT64_MAX / n)
+    return NULL;
+  void *p = malloc(size * n);
+  if (!p)
+    return NULL;
+  ft_bzero(p, n * size);
+  return p;
+}
+
+char *ft_strdup(const char *s) {
+  char *dup = (char *)malloc(ft_strlen(s) + 1);
+  if (!dup) {
+    errno = ENOMEM;
+    return NULL;
+  }
+  ft_memcpy(s, dup, ft_strlen(s) + 1);
+  return dup;
 }
