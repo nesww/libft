@@ -222,3 +222,16 @@ char *ft_strdup(const char *s) {
   ft_memcpy(s, dup, ft_strlen(s) + 1);
   return dup;
 }
+
+char *ft_substr(const char *s, u32 start, u64 len) {
+  if (len - start > ft_strlen(s)) {
+    return NULL;
+  }
+  char *sub = (char *)malloc(sizeof(char) * len);
+  if (!sub)
+    return NULL;
+  // dividing start / 4 since u32 (aka unsigned int)
+  // is 4 bytes, one char is 1 byte
+  ft_memcpy(s + start, sub, len);
+  return sub;
+}

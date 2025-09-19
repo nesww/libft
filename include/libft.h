@@ -359,4 +359,18 @@ void *ft_calloc(u64 n, u64 size);
  * errno).
  */
 char *ft_strdup(const char *s);
+
+/**
+ * ft_substr - Get a substring of an existing string.
+ * @param s (const char*): string where to get the substring
+ * @param start (u32): start index of the substring in the string
+ * @param len (u64): len of the substring
+ *
+ * Allocate memory (with malloc, it must be freed to avoid memleak)
+ * and return the substring extracted from the s string, starting
+ * from start index, with a length of len.
+ *
+ * Return: the pointer to the newly allocated substring, NULL if malloc fails
+ */
+char *ft_substr(const char *s, u32 start, u64 len);
 #endif // LIBFT_H
