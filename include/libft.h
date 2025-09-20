@@ -1,6 +1,21 @@
 #ifndef LIBFT_H
 #define LIBFT_H
 
+/*
+ * libft - nes
+ *
+ * This project is done on my free time.
+ * You are free to use it for anything.
+ * But be careful, the implementation is not perfect,
+ * and I cannot be responsible for any bad usage or
+ * unexpected results in any codebase.
+ *
+ * Public domain.
+ *
+ * This implementation is only for 64 bits systems,
+ * 32 bits systems could behave differently (I did not
+ * test on such systems).
+ */
 // u64 => unsigned long long, unsigned int on 64 bits i.e. 8 bytes
 typedef unsigned long long u64;
 
@@ -12,6 +27,18 @@ typedef unsigned short u16;
 
 // u8 => unsigned char, unsigned integer (or often char) on 8 bits i.e. 1 byte
 typedef unsigned char u8;
+
+// i64 => signed long long, 64 bits i.e. 8 bytes accepting negative values
+typedef long long i64;
+
+// i32=> signed int, 32 bits i.e. 4 bytes accepting negative values
+typedef int i32;
+
+// i16 => signed short, 16 bits i.e. 2 bytes accepting negative values
+typedef short i16;
+
+// i8 => signed char, 8 bits i.e. 1 bytes accepting negative values
+typedef char i8;
 
 #define NULL 0
 
@@ -29,7 +56,7 @@ typedef unsigned char u8;
 // Make any argument of a function UNUSED, avoiding -Werror=unused-parameter
 #define UNUSED(x) ((void)x)
 
-/**
+/*
  * ft_isalpha - Check if a given character is alpha.
  * @paramc (u8): character to test
  *
@@ -41,7 +68,7 @@ typedef unsigned char u8;
  */
 u8 ft_isalpha(u8 c);
 
-/**
+/*
  * ft_isdigit - Check if a given character is digit.
  * @param c (u8): character to test
  *
@@ -52,7 +79,7 @@ u8 ft_isalpha(u8 c);
  */
 u8 ft_isdigit(u8 c);
 
-/**
+/*
  * ft_isalnum - Check if a given character is alpha-numerical.
  * @param c (u8): character to test
  *
@@ -63,7 +90,7 @@ u8 ft_isdigit(u8 c);
  */
 u8 ft_isalnum(u8 c);
 
-/**
+/*
  * ft_isascii - Check if a given character is an ASCII one.
  * @param c (u8): character to test
  *
@@ -74,7 +101,7 @@ u8 ft_isalnum(u8 c);
  */
 u8 ft_isascii(u8 c);
 
-/**
+/*
  * ft_isprint - Check if a given character is printable.
  * @param c (u8): character to test
  *
@@ -91,7 +118,7 @@ u8 ft_isprint(u8 c);
  * ******************************
  */
 
-/**
+/*
  * ft_strlen - Gets the length of a given string.
  * @param s (char*): string to test
  *
@@ -102,7 +129,7 @@ u8 ft_isprint(u8 c);
  */
 u64 ft_strlen(const char *s);
 
-/**
+/*
  * ft_memset - Sets byte by byte a constant byte to a buffer.
  * @param s (void*): buffet where to write
  * @param c (u8): value to write byte by byte;
@@ -116,7 +143,7 @@ u64 ft_strlen(const char *s);
  */
 void *ft_memset(void *s, u8 c, u32 n);
 
-/**
+/*
  * ft_bzero - Sets byte 0 value to a buffer.
  * @param s (void*): buffer where to write
  * @param n (u32): number of bytes to write
@@ -126,7 +153,7 @@ void *ft_memset(void *s, u8 c, u32 n);
  */
 void ft_bzero(void *s, u32 n);
 
-/**
+/*
  * ft_memcpy - Copy the contents of the source buffer to the destination buffer.
  * @param src (const void*): source buffer to copy
  * @param dest (void*): destination buffer where to copy
@@ -147,7 +174,7 @@ void ft_bzero(void *s, u32 n);
  */
 void *ft_memcpy(const void *src, void *dest, u32 size);
 
-/**
+/*
  * ft_memmove - Copy from src buffer `size` bytes into destination buffer.
  * @param src (const void*): source buffer to move (copy)
  * @param dest (void*): destination buffer where to copy
@@ -167,7 +194,7 @@ void *ft_memcpy(const void *src, void *dest, u32 size);
  */
 void *ft_memmove(const void *src, void *dest, u32 size);
 
-/**
+/*
  * ft_strlcpy - Copy the string content of the src buffer to
  * the destination buffer.
  * @param src (const char*): source buffer to copy from
@@ -190,7 +217,7 @@ void *ft_memmove(const void *src, void *dest, u32 size);
  */
 u64 ft_strlcpy(const char *src, char *dest, u64 size);
 
-/**
+/*
  * ft_strlcat - Concatenate the string content of the source buffer after the
  * contents of the destination buffer.
  * @param src (const char*): source buffer
@@ -334,7 +361,7 @@ const char *ft_strnstr(const char *big, const char *little, u64 len);
  */
 int ft_atoi(const char *nptr);
 
-/**
+/*
  * ft_calloc - Allocate memory for an array of n element of size bytes.
  * @param n (u64): number of elements of the array
  * @param size (u64): size in bytes of each element
@@ -347,7 +374,7 @@ int ft_atoi(const char *nptr);
  */
 void *ft_calloc(u64 n, u64 size);
 
-/**
+/*
  * ft_strdup - Duplicate a string to a new pointer.
  * @param s (const char*): the string to duplicate
  *
@@ -360,7 +387,7 @@ void *ft_calloc(u64 n, u64 size);
  */
 char *ft_strdup(const char *s);
 
-/**
+/*
  * ft_substr - Get a substring of an existing string.
  * @param s (const char*): string where to get the substring
  * @param start (u32): start index of the substring in the string
@@ -373,4 +400,73 @@ char *ft_strdup(const char *s);
  * Return: the pointer to the newly allocated substring, NULL if malloc fails
  */
 char *ft_substr(const char *s, u32 start, u64 len);
+
+/*
+ * ft_strjoin - Join two string into a new string.
+ * @param s1 (const char*): first string to join (prefix)
+ * @param s2 (const char*): second string to join (suffix)
+ *
+ * Join two given strings into a new one. Uses malloc to
+ * allocate space for the newly created string, will need to be
+ * freed.
+ * Both string needs to be NUL-terminated.
+ * The constructed string will be NUL-terminated.
+ *
+ * Return: the joined string, NULL if malloc fails.
+ */
+char *ft_strjoin(const char *s1, const char *s2);
+
+/*
+ * ft_strtrim - Trim a given string on extremities, with a given set of chars to
+ * remove.
+ * @param s (const char*): string to trim
+ * @param set (const char*): set of char to remove from the string
+ *
+ * Trim the given string on both extremities with the given
+ * set of chars. For example, with a set `ab`, on the string
+ * `abaTiaibab`, it will give `Tiai`. The a in the middle is separated,
+ * and thus won't be removed.
+ * Uses malloc, you have to free memory.
+ *
+ * Return: the trimmed string pointer, NULL if malloc fails.
+ */
+char *ft_strtrim(const char *s, const char *set);
+
+/*
+ * ft_split - Split a given string with a given separator.
+ * @param s (const char*): string to split
+ * @param c (const char): separator
+ *
+ * Split a given string into multiple strings, divided by
+ * a given separator character. Allocates memory with malloc,
+ * so it needs to be freed to avoid memleak.
+ *
+ * Return: the array of string split, NULL if malloc fails.
+ */
+char **ft_split(const char *s, char c);
+
+/**
+ * ft_itoa - Convert int to alpha.
+ * @param n (int): the int to convert to alpha
+ *
+ * Convert given integer to alpha value in a string.
+ * Does the inverse of ft_atoi.
+ * Uses malloc for the new string (free for no memleak).
+ *
+ * Return: the pointer to the converted value, NULL if failed.
+ */
+char *ft_itoa(int n);
+
+char *ft_strmapi(const char *s, char (*f)(u32, char));
+
+void ft_striteri(char *s, void (*f)(u32, char *));
+
+void ft_putchar_fd(u8 c, int fd);
+
+void ft_putstr_fd(char *s, int fd);
+
+void ft_putendl_fd(char *s, int fd);
+
+void ft_pubnbr_fd(int n, int fd);
+
 #endif // LIBFT_H

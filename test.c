@@ -17,20 +17,53 @@ int main(int argc, char **argv) {
   const char *found = ft_strnstr(big, little, ft_strlen(big));
   fprintf(stdout, "Big address : %p, found address for little: %p, diff: %ld\n",
           big, found, found - big);
-
-  fprintf(stdout, "Test for int cast for a char: had %c, casted to int: %d \n",
-          '2', (int)'2');
-
+  fprintf(stdout, "\n=== Test for atoi ===\n");
   fprintf(stdout, "Test for atoi: chars: %s, result: %d\n", "-123bc",
           ft_atoi("-123bc"));
 
+  fprintf(stdout, "\n=== Test for substr ===\n");
   const char *x = "AABXAA";
   char *res = ft_substr(x, 2, 21789);
   fprintf(stdout, "For string: %s, expected BX, had: %s\n", x, res);
+  free(res);
 
   // strdup
+  fprintf(stdout, "\n=== Test for strdup ===\n");
   const char *y = "HOLA__";
   char *yy = ft_strdup(y);
   fprintf(stdout, "%s\n", yy);
   free(yy);
+
+  fprintf(stdout, "\n=== Test for itoa ===\n");
+  // test for itoa
+  int toto = 125121;
+  char *toto_res = ft_itoa(toto);
+  fprintf(stdout, "got: %s\n", toto_res);
+  free(toto_res);
+
+  char *s1 = "AA";
+  char *s2 = "BB";
+
+  fprintf(stdout, "\n=== Test for strjoin ===\n");
+  char *join = ft_strjoin(s1, s2);
+  printf("Result of ft_strjoin: %s\n", join);
+  free(join);
+
+  fprintf(stdout, "\n=== Test for strtrim ===\n");
+  char *s = "aabaabaMy name is Simonbbabba";
+  char *set = "ab";
+  char *trimmed = ft_strtrim(s, set);
+  printf("Result of trimming the string `%s` with set `%s` => %s\n", s, set,
+         trimmed);
+  free(trimmed);
+
+  fprintf(stdout, "\n=== Test for split ===\n");
+  char **res_split = ft_split("a,,b", ',');
+  printf("Initial string: %s, sep: %c for splitting\n", "hello", 'o');
+  for (u32 i = 0; i < 3; ++i)
+    printf("splitted[%d] = %s\n", i, res_split[i]);
+  for (u32 i = 0; i < 2; ++i) {
+    free(res_split[i]);
+  }
+  free(res_split);
 }

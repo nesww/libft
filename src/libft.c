@@ -1,8 +1,10 @@
 #include <errno.h>
 #include <libft.h>
+#include <stddef.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 u8 ft_isalpha(u8 c) { return (c > 0x40 && c < 0x5B) || (c > 0x60 && c < 0x7B); }
 
@@ -234,4 +236,152 @@ char *ft_substr(const char *s, u32 start, u64 len) {
   // is 4 bytes, one char is 1 byte
   ft_memcpy(s + start, sub, len);
   return sub;
+}
+
+char *ft_strjoin(const char *s1, const char *s2) {
+  u64 s1_len = ft_strlen(s1);
+  u64 s2_len = ft_strlen(s2);
+  char *str = malloc(s1_len + s2_len);
+
+  if (!str)
+    return NULL;
+
+  ft_strlcpy(s1, str, sizeof(str));
+  ft_strlcat(s2, str, s1_len + s2_len);
+  str[s1_len + s2_len - 1] = '\0';
+
+  return str;
+}
+
+int ft_ischar_in_string(const char *s, const char c) {
+  if (!s)
+    return 0;
+  u32 s_len = ft_strlen(s);
+  for (u32 i = 0; i < s_len; ++i) {
+    if (s[i] == c)
+      return 1;
+  }
+  return 0;
+}
+
+char *ft_strtrim(const char *s, const char *set) {
+  if (!s || !set)
+    return NULL;
+
+  // head of string
+  u32 s_len = ft_strlen(s);
+  u32 start_index = 0;
+
+  while (ft_ischar_in_string(set, s[start_index]))
+    ++start_index;
+
+  // tail of string
+  u32 end_index = s_len - 1;
+  while (ft_ischar_in_string(set, s[end_index]))
+    --end_index;
+
+  if (start_index > end_index)
+    return ft_strdup("");
+
+  char *tmp = malloc(end_index - start_index + 2);
+  u32 k = 0;
+  for (u32 i = start_index; i <= end_index; ++i) {
+    tmp[k] = s[i];
+    ++k;
+  }
+  tmp[end_index - start_index + 1] = '\0';
+  return tmp;
+}
+
+u32 count_words(const char *s, const char c) {
+  if (!s || !*s)
+    return 0;
+  u32 count = 0;
+  int in_word = 0;
+
+  for (u32 i = 0; s[i]; ++i) {
+    if (s[i] != c && !in_word) {
+      in_word = 1;
+      count++;
+    } else if (s[i] == c) {
+      in_word = 0;
+    }
+  }
+  return count;
+}
+
+char **ft_split(const char *s, char c) {
+  if (!s)
+    return NULL;
+  if (!ft_ischar_in_string(s, c)) {
+    char **res = malloc(sizeof(char *) * 2);
+    res[0] = malloc(ft_strlen(s) + 1);
+    ft_memcpy(s, res[0], ft_strlen(s) + 1);
+    res[1] = NULL;
+    return res;
+  }
+
+  u32 nb_words = count_words(s, c);
+
+  char **tmp = malloc((nb_words + 1) * sizeof(char *));
+
+  u32 read_string_index = 0;
+  for (u32 i = 0; i < nb_words; ++i) {
+    u32 word_len = 0;
+    while (s[read_string_index + word_len] != '\0' &&
+           s[read_string_index + word_len] != c) {
+      ++word_len;
+    }
+    if (word_len == 0) {
+      ++read_string_index;
+      --i;
+      continue;
+    }
+
+    tmp[i] = malloc((word_len + 1) * sizeof(char));
+    for (u32 k = 0; k < word_len; ++k) {
+      tmp[i][k] = s[read_string_index + k];
+    }
+    tmp[i][word_len] = '\0';
+    read_string_index += word_len;
+    while (s[read_string_index] == c) {
+      read_string_index++;
+    }
+  }
+  tmp[nb_words] = NULL;
+  return tmp;
+}
+
+char *ft_itoa(int n) {
+  if (n == 0) {
+    char *res = malloc(2);
+    if (!res)
+      return NULL;
+    res[0] = '0';
+    res[1] = '\0';
+    return res;
+  }
+  int isneg = n < 0;
+  i64 num = isneg ? -(i64)n : n;
+
+  u32 nbdigits = 0;
+  i64 tmp = num;
+  while (tmp > 0) {
+    ++nbdigits;
+    tmp /= 10;
+  }
+  char *alpha = malloc(nbdigits + 1 + (isneg ? 1 : 0));
+  if (!alpha)
+    return NULL;
+
+  u32 i = nbdigits + (isneg ? 1 : 0) - 1;
+  while (num > 0) {
+    alpha[i--] = num % 10 + 0x30;
+    num /= 10;
+  }
+  if (isneg)
+    alpha[0] = '-';
+
+  alpha[nbdigits + (isneg ? 1 : 0)] = '\0';
+  return alpha;
 }
