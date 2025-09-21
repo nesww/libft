@@ -1,5 +1,5 @@
 #include <fcntl.h>
-#include <libft.h>
+#include <libft/libft.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -13,6 +13,8 @@ void tolowercase(u32 index, char *c) {
   UNUSED(index);
   *c += 0x20;
 }
+
+void del_str(void *s) { UNUSED(s); }
 
 int main(int argc, char **argv) {
   if (argc < 2)
@@ -106,4 +108,19 @@ int main(int argc, char **argv) {
   ft_pubnbr_fd(6969, fd_test);
 
   close(fd_test);
+
+  /////////////////
+  fprintf(stdout, "\n=== Test for lstnew ===\n");
+  t_list *list = ft_lstnew("Hello");
+  printf("Newly created linked list element: %s, with next at: %p\n",
+         ((char *)(list->content)), list->next);
+  printf("list size before appending: %d\n", ft_lstsize(list));
+  t_list *l2 = ft_lstnew(" World!");
+  ft_lstadd_back(&list, l2);
+  printf("Appended two linked list element: %s %s, with next at: %p "
+         "(original address of second element, supposed to be next: %p) & %p\n",
+         ((char *)(list->content)), ((char *)(l2->content)), list->next, l2,
+         l2->next);
+  printf("list size after appending: %d\n", ft_lstsize(list));
+  ft_lstclear(&list, del_str);
 }

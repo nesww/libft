@@ -1,6 +1,8 @@
 #ifndef LIBFT_H
 #define LIBFT_H
 
+#include <libft/ftlist.h>
+#include <libft/ftypes.h>
 /*
  * libft - nes
  *
@@ -17,28 +19,6 @@
  * test on such systems).
  */
 // u64 => unsigned long long, unsigned int on 64 bits i.e. 8 bytes
-typedef unsigned long long u64;
-
-// u32 => unsigned int, unsigned integer on 32 bits i.e 4 bytes
-typedef unsigned int u32;
-
-// u16 => unsigned short, unsigned integer on 16 bits i.e 2 bytes
-typedef unsigned short u16;
-
-// u8 => unsigned char, unsigned integer (or often char) on 8 bits i.e. 1 byte
-typedef unsigned char u8;
-
-// i64 => signed long long, 64 bits i.e. 8 bytes accepting negative values
-typedef long long i64;
-
-// i32=> signed int, 32 bits i.e. 4 bytes accepting negative values
-typedef int i32;
-
-// i16 => signed short, 16 bits i.e. 2 bytes accepting negative values
-typedef short i16;
-
-// i8 => signed char, 8 bits i.e. 1 bytes accepting negative values
-typedef char i8;
 
 #define NULL 0
 
@@ -483,12 +463,45 @@ char *ft_strmapi(const char *s, char (*f)(u32, char));
  */
 void ft_striteri(char *s, void (*f)(u32, char *));
 
+/*
+ * ft_putchar_fd - Write a given character to the file descriptor provided.
+ * @param c (u8): char to write
+ * @param fd (int): file descriptor
+ *
+ * Write the given character to the given file descriptor,
+ * uses the write syscall.
+ */
 void ft_putchar_fd(i8 c, int fd);
 
+/*
+ * ft_putstr_fd - Write a string to the file descriptor provided.
+ * @param s (char*): string to write
+ * @param fd (int): file descriptor
+ *
+ * Write a given string to the given file descriptor.
+ * Uses the write syscall.
+ */
 void ft_putstr_fd(char *s, int fd);
 
+/*
+ * ft_putendl_fd - Write a string to a file descriptor provided, with an
+ * endline.
+ * @param s (char*): string to write
+ * @param fd (int): file descriptor
+ *
+ * Write a given string to the given file descriptor, adding an endline
+ * character. Uses the write syscall.
+ */
 void ft_putendl_fd(char *s, int fd);
 
+/*
+ * ft_pubnbr_fd - Write an integer to a file descriptor provided.
+ * @param n (int): integer to write
+ * @param fd (int): file descriptor
+ *
+ * Write a given integer to the given file descriptor.
+ * Uses write syscal.
+ */
 void ft_pubnbr_fd(int n, int fd);
 
 #endif // LIBFT_H

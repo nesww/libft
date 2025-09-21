@@ -1,5 +1,5 @@
 #include <errno.h>
-#include <libft.h>
+#include <libft/libft.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -420,4 +420,107 @@ void ft_pubnbr_fd(int n, int fd) {
     ft_putstr_fd(str, fd);
     free(str);
   }
+}
+
+//// ft_list
+
+t_list *ft_lstnew(void *content) {
+  t_list *res = malloc(sizeof(t_list));
+  if (!res)
+    return NULL;
+  res->content = content;
+  res->next = NULL;
+  return res;
+}
+
+void ft_lstadd_front(t_list **lst, t_list *newl) {
+  if (!newl)
+    return;
+  newl->next = *lst;
+  *lst = newl;
+}
+
+i32 ft_lstsize(t_list *lst) {
+  i32 counter = 0;
+  t_list *current = lst;
+  while (current) {
+    current = current->next;
+    ++counter;
+  }
+  return counter;
+}
+
+t_list *fr_lstlast(t_list *lst) {
+  t_list *current = lst;
+  while (current->next)
+    current = current->next;
+  return current;
+}
+
+void ft_lstadd_back(t_list **lst, t_list *newl) {
+  if (!lst || !newl)
+    return;
+  if (*lst == NULL) {
+    *lst = newl;
+    return;
+  }
+  t_list *tmp = *lst;
+  while (tmp->next)
+    tmp = tmp->next;
+  tmp->next = newl;
+  newl->next = NULL;
+}
+
+void ft_lstdelone(t_list *lst, void (*del)(void *)) {
+  if (!lst || !del)
+    return;
+  del(lst->content);
+  free(lst);
+}
+
+void ft_lstclear(t_list **lst, void (*del)(void *)) {
+  if (!lst || !del)
+    return;
+  t_list *current = *lst;
+  t_list *next;
+  while (current) {
+    next = current->next;
+    ft_lstdelone(current, del);
+    current = next;
+  }
+  *lst = NULL;
+}
+
+void ft_lstiter(t_list *lst, void (*f)(void *)) {
+  t_list *current = lst;
+  while (current) {
+    f(current->content);
+    current = current->next;
+  }
+}
+
+t_list *ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *)) {
+  if (!lst)
+    return NULL;
+  t_list *res = malloc(sizeof(t_list));
+  if (!res)
+    return NULL;
+  res->content = f(lst->content);
+
+  t_list *current = lst->next;
+  t_list *last = res;
+  while (current) {
+    t_list *tmp = malloc(sizeof(t_list));
+    if (!tmp) {
+      ft_lstclear(&res, del);
+      return NULL;
+    }
+    tmp->content = f(current->content);
+    last->next = tmp;
+    last = tmp;
+    current = current->next;
+  }
+  last->next = NULL;
+
+  return res;
 }
