@@ -457,11 +457,33 @@ char **ft_split(const char *s, char c);
  */
 char *ft_itoa(int n);
 
+/*
+ * ft_strmapi - Apply a given function to each char of a string.
+ * @param s (const char*): string input
+ * @param f (char (u32, char)): callback function applying to each char
+ *
+ * Apply a callback function to each character of the given string.
+ * First argument of the callback is expected to be a u32 (i.e. the
+ * index of the current char), and the char itself. Return the modified
+ * char. Allocates memory to return the newly modified string.
+ * Input string must be NUL-terminated.
+ *
+ * Return: the pointer to the newly modified string, NULL if malloc fails.
+ */
 char *ft_strmapi(const char *s, char (*f)(u32, char));
 
+/*
+ * ft_striteri - Apply a given function to each char of a string.
+ * @param s (char*): string input
+ * @param f(void (u32, char*)): function modifier for the string
+ *
+ * Apply a callbakc function to each character of the given string.
+ * MODIFIES the original string and does not allocate new memory.
+ * Source string must be NUL-terminated.
+ */
 void ft_striteri(char *s, void (*f)(u32, char *));
 
-void ft_putchar_fd(u8 c, int fd);
+void ft_putchar_fd(i8 c, int fd);
 
 void ft_putstr_fd(char *s, int fd);
 

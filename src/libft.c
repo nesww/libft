@@ -1,10 +1,9 @@
 #include <errno.h>
 #include <libft.h>
-#include <stddef.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
+#include <unistd.h>
 
 u8 ft_isalpha(u8 c) { return (c > 0x40 && c < 0x5B) || (c > 0x60 && c < 0x7B); }
 
@@ -384,4 +383,41 @@ char *ft_itoa(int n) {
 
   alpha[nbdigits + (isneg ? 1 : 0)] = '\0';
   return alpha;
+}
+char *ft_strmapi(const char *s, char (*f)(u32, char)) {
+  char *mapped = malloc((ft_strlen(s) + 1) * sizeof(char));
+  if (!mapped)
+    return NULL;
+  for (u32 i = 0; s[i]; ++i) {
+    mapped[i] = f(i, s[i]);
+  }
+  mapped[ft_strlen(s)] = '\0';
+  return mapped;
+}
+
+void ft_striteri(char *s, void (*f)(u32, char *)) {
+  for (u32 i = 0; s[i]; ++i) {
+    f(i, &s[i]);
+  }
+}
+
+void ft_putchar_fd(i8 c, int fd) { write(fd, &c, 1); }
+
+void ft_putstr_fd(char *s, int fd) {
+  for (u32 i = 0; s[i]; ++i) {
+    ft_putchar_fd(s[i], fd);
+  }
+}
+
+void ft_putendl_fd(char *s, int fd) {
+  ft_putstr_fd(s, fd);
+  ft_putchar_fd('\n', fd);
+}
+
+void ft_pubnbr_fd(int n, int fd) {
+  char *str = ft_itoa(n);
+  if (str) {
+    ft_putstr_fd(str, fd);
+    free(str);
+  }
 }

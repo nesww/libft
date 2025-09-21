@@ -1,6 +1,18 @@
+#include <fcntl.h>
 #include <libft.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
+
+char touppercase(u32 index, char c) {
+  UNUSED(index);
+  return c - 0x20;
+}
+
+void tolowercase(u32 index, char *c) {
+  UNUSED(index);
+  *c += 0x20;
+}
 
 int main(int argc, char **argv) {
   if (argc < 2)
@@ -34,6 +46,7 @@ int main(int argc, char **argv) {
   fprintf(stdout, "%s\n", yy);
   free(yy);
 
+  /////////////////
   fprintf(stdout, "\n=== Test for itoa ===\n");
   // test for itoa
   int toto = 125121;
@@ -44,11 +57,13 @@ int main(int argc, char **argv) {
   char *s1 = "AA";
   char *s2 = "BB";
 
+  /////////////////
   fprintf(stdout, "\n=== Test for strjoin ===\n");
   char *join = ft_strjoin(s1, s2);
   printf("Result of ft_strjoin: %s\n", join);
   free(join);
 
+  /////////////////
   fprintf(stdout, "\n=== Test for strtrim ===\n");
   char *s = "aabaabaMy name is Simonbbabba";
   char *set = "ab";
@@ -57,6 +72,7 @@ int main(int argc, char **argv) {
          trimmed);
   free(trimmed);
 
+  /////////////////
   fprintf(stdout, "\n=== Test for split ===\n");
   char **res_split = ft_split("a,,b", ',');
   printf("Initial string: %s, sep: %c for splitting\n", "hello", 'o');
@@ -66,4 +82,28 @@ int main(int argc, char **argv) {
     free(res_split[i]);
   }
   free(res_split);
+
+  /////////////////
+  fprintf(stdout, "\n=== Test for strmapi ===\n");
+  const char *tomap = "tatatiti";
+  char *mapped = ft_strmapi(tomap, touppercase);
+  printf("result of mapping %s= %s\n", tomap, mapped);
+
+  /////////////////
+  fprintf(stdout, "\n=== Test for striteri ===\n");
+  printf("about to changed directly mapped %s\n", mapped);
+  ft_striteri(mapped, tolowercase);
+  printf("result of change directly: %s\n", mapped);
+  free(mapped);
+
+  /////////////////
+  fprintf(stdout, "\n=== Test for putchar_fd ===\n");
+  int fd_test = open("test.txt", O_CREAT | O_WRONLY | O_TRUNC | O_APPEND, 0644);
+  printf("fd= %d\n", fd_test);
+  ft_putchar_fd('A', fd_test);
+
+  ft_putendl_fd("TATATA", fd_test);
+  ft_pubnbr_fd(6969, fd_test);
+
+  close(fd_test);
 }
