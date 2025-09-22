@@ -5,7 +5,16 @@ BUILD_DIR=build/
 INCLUDE_DIR=include/
 SOURCE_DIR=src/
 
-INSTALL_INCLUDE_DIR=/usr/include/libft
+
+OS := $(shell uname -s)
+
+ifeq ($(OS), Darwin)
+INSTALL_PREFIX_PATH=/usr/local
+else
+INSTALL_PREFIX_PATH=/usr
+endif
+
+INSTALL_INCLUDE_DIR=$(INSTALL_PREFIX_PATH)/include/libft
 all: clean build install test
 
 clean:
@@ -20,12 +29,13 @@ build: $(INCLUDE_DIR)* $(SOURCE_DIR)libft.c
 
 uninstall:
 	sudo rm -f $(INSTALL_INCLUDE_DIR)/*
-	sudo rm -f /usr/lib/libft.a
+	sudo rm -f $(INSTALL_PREFIX_PATH)/lib/libft.a
 
 install: build 
+	echo $(OS)
 	sudo mkdir -p $(INSTALL_INCLUDE_DIR)
 	sudo cp $(INCLUDE_DIR)* $(INSTALL_INCLUDE_DIR)
-	sudo cp $(BUILD_DIR)libft.a /usr/lib/
+	sudo cp $(BUILD_DIR)libft.a $(INSTALL_PREFIX_PATH)/lib/
 
 test: install test.c
 	gcc $(FLAGS) -g test.c -o test -lft
