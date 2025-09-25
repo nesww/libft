@@ -191,8 +191,8 @@ const char *ft_strnstr(const char *big, const char *little, u64 len) {
 
 int ft_atoi(const char *nptr) {
   u32 nptr_len = ft_strlen(nptr);
-  u32 i = 1;
   int isneg = nptr[0] == '-';
+  u32 i = isneg ? 1 : 0;
   int result = 0;
   while (i < nptr_len && ft_isdigit(nptr[i])) {
     result += ((int)nptr[i] - 0x30);
