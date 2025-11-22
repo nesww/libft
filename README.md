@@ -25,4 +25,4 @@ any problem occurring with the usage of the library.
 
 ## License
 
-This is available on public domain. Use it freely.
+See [LICENSE](./LICENSE).
